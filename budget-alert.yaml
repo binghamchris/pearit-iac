@@ -1,0 +1,20 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Persistent storage for files and objects for KayakLaunch.
+
+Parameters:
+  emailAddress:
+    Type: String
+    AllowedPattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
+    Description: "The email address to send budget alerts too"
+
+
+Resources:
+  alertTopic:
+    Type: AWS::SNS::Topic
+    Properties: 
+      DisplayName: "AWS Budget Alerts Topic"
+      Subscription:
+        -
+          Endpoint: !Ref emailAddress
+          Protocol: email
+      TopicName: budgetAlerts
